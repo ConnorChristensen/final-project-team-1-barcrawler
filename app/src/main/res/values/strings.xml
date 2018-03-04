@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">barcrawler</string>
+
+    <string name="go_to">I want to go to</string>
+    <string name="barNumber">0</string>
+    <string name="bars">bars</string>
+    <string name="go_button">Go</string>
 </resources>
