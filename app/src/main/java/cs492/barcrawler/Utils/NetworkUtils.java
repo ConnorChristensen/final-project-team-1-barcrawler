@@ -13,7 +13,7 @@ import okhttp3.Response;
 public class NetworkUtils {
     private static final OkHttpClient mHTTPClient = new OkHttpClient();
 
-    public static String doHTTPGet(String url) throws IOException {
+    public static String doHTTPGet(String url, String headerName, String headerValue) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
