@@ -1,11 +1,17 @@
 package cs492.barcrawler.Utils;
 
+import android.net.ParseException;
 import android.net.Uri;
 
 import com.yelp.clientlib.connection.YelpAPI;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by Billy on 3/7/18.
@@ -50,6 +56,31 @@ public class YelpAPIUtils {
                 .appendQueryParameter(YELP_API_OPEN_NOW_PARAM, "true")
                 .build()
                 .toString();
+    }
+
+    public static ArrayList<YelpItem> parseYelpJSONResponse(String yelpJSONResponse) {
+        try {
+            JSONObject yelpObj = new JSONObject(yelpJSONResponse);
+            JSONArray yelpBusinessList = yelpObj.getJSONArray("businesses");
+
+            ArrayList<YelpItem> yelpItemsList = new ArrayList<>();
+            for(int i = 0; i < yelpBusinessList.length(); i++) {
+                YelpItem yelpItem = new YelpItem();
+                JSONObject yelpListElement = yelpBusinessList.getJSONObject(i);
+
+                yelpItem.barName = yelpListElement.getString("name");
+                yelpItemsList.add(yelpItem);
+            }
+            return yelpItemsList;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
