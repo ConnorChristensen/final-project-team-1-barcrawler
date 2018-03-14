@@ -14,7 +14,7 @@ import cs492.barcrawler.Utils.YelpAPIUtils;
  */
 
 public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
-    private ArrayList<YelpAPIUtils.YelpItem> mBarItems;
+    private ArrayList<YelpAPIUtils.YelpItem> mBarList;
     private OnBarClickListener mBarClickListener;
     private Context mContext;
 
@@ -28,14 +28,14 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
     }
 
     public void updateBarItems(ArrayList<YelpAPIUtils.YelpItem> barList) {
-        mBarItems = barList;
+        mBarList = barList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (mBarItems != null) {
-            return mBarItems.size();
+        if (mBarList != null) {
+            return mBarList.size();
         } else {
             return 0;
         }
@@ -50,7 +50,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
     @Override
     public void onBindViewHolder(BarAdapter.BarViewHolder holder, int position) {
-        holder.bind(mBarItems.get(position));
+        holder.bind(mBarList.get(position));
     }
 
     class BarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -68,7 +68,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
         @Override
         public void onClick(View v) {
-            YelpAPIUtils.YelpItem barItem = mBarItems.get(getAdapterPosition());
+            YelpAPIUtils.YelpItem barItem = mBarList.get(getAdapterPosition());
             mBarClickListener.onBarItemClick(barItem);
         }
     }
