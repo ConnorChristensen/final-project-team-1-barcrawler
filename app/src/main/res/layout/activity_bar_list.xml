@@ -6,4 +6,21 @@
     android:layout_height="match_parent"
     tools:context="cs492.barcrawler.BarListActivity">
 
+    <TextView
+        android:id="@+id/loading_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="16dp"
+        android:visibility="invisible"
+        android:text="@string/loading_error_message" />
+
+    <ProgressBar
+        android:id="@+id/bar_list_loading_indicator"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_margin="32dp"
+        android:layout_gravity="top|center_horizontal"
+        android:visibility="invisible"/>
+
 </android.support.constraint.ConstraintLayout>
