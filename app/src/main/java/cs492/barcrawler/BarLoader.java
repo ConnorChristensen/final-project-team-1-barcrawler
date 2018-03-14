@@ -17,6 +17,7 @@ import cs492.barcrawler.Utils.YelpAPIUtils;
 public class BarLoader extends AsyncTaskLoader<String> {
 
     private String mYelpURL;
+    private String mYelpJSON;
 
     private String userLatitude = "44.563694";
     private String userLongitude = "-123.262556";
@@ -24,6 +25,17 @@ public class BarLoader extends AsyncTaskLoader<String> {
     public BarLoader(Context context, String yelpURL) {
         super(context);
         mYelpURL = yelpURL;
+    }
+
+    @Override
+    protected void onStartLoading() {
+        if (mYelpURL != null) {
+            if (mYelpJSON != null) {
+                deliverResult(mYelpJSON);
+            } else {
+                forceLoad();
+            }
+        }
     }
 
     @Override
@@ -43,5 +55,11 @@ public class BarLoader extends AsyncTaskLoader<String> {
             }
         }
         return barJSON;
+    }
+
+    @Override
+    public void deliverResult(String data) {
+        mYelpJSON = data;
+        super.deliverResult(data);
     }
 }
