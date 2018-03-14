@@ -1,5 +1,7 @@
 package cs492.barcrawler.Utils;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -18,6 +20,9 @@ public class NetworkUtils {
                 .url(url)
                 .addHeader(headerName, headerValue)
                 .build();
+
+        Log.d("NETWORK UTIL: ", request.toString());
+
         Response response = mHTTPClient.newCall(request).execute();
 
         try {
