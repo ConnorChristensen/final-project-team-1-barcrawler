@@ -46,12 +46,12 @@ public class BarLoader extends AsyncTaskLoader<String> {
             Log.d("BAR LOADER", "LOADING USING THIS URL: " + mYelpURL);
             //This is where the network request is made
             try {
-                String response = NetworkUtils.doHTTPGet(
+                barJSON = NetworkUtils.doHTTPGet(
                         YelpAPIUtils.buildYelpSearchURL(userLatitude, userLongitude),
                         YelpAPIUtils.YELP_API_AUTH_HEADER_NAME,
                         YelpAPIUtils.YELP_API_AUTH_HEADER_VALUE);
 
-                Log.d("YELP RESPONSE: ", response);
+                Log.d("YELP RESPONSE: ", barJSON);
             } catch (IOException e) {
                 e.printStackTrace();
             }
