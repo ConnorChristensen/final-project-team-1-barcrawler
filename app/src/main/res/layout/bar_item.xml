@@ -9,6 +9,9 @@
         android:id="@+id/tv_bar_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="19sp"
+        android:paddingVertical="15dp"
+        android:paddingLeft="15dp"
+        android:textColor="#000"/>
 
 </LinearLayout>

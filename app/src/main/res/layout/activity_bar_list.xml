@@ -9,10 +9,12 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_bar_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"/>
     
         <TextView
             android:id="@+id/loading_error_message"
