@@ -5,4 +5,7 @@
     <string name="barNumber">0</string>
     <string name="bars">bars</string>
     <string name="go_button">Go</string>
+
+
+    <string name="loading_error_message">Whoops. We could not get your bars. Check your internet connection</string>
 </resources>
