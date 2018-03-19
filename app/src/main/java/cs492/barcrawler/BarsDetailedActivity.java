@@ -14,11 +14,11 @@ public class BarsDetailedActivity extends AppCompatActivity {
     public TextView mBarPrice;
     public TextView mBarPhoneNumber;
     public TextView mBarLocation;
-    public TextView mBarAddress;
-    public TextView mBarCity;
-    public TextView mBarState;
-    public TextView mBarCountry;
-    public TextView mBarZipCode;
+//    public TextView mBarAddress;
+//    public TextView mBarCity;
+//    public TextView mBarState;
+//    public TextView mBarCountry;
+//    public TextView mBarZipCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
