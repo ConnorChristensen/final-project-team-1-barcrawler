@@ -33,18 +33,20 @@ public class YelpAPIUtils {
 
     public static class YelpItem implements Serializable {
         public String barName;
-        public String description;
-        public URL imageURL;
-        public URL yelpURL;
+        public String imageURL;
+        public String yelpURL;
         public int rating;
         public String price;
         public String phoneNumber;
         public String address;
         public String city;
         public String state;
-        public String zipcode;
-        public float distance;
+        public String country;
+        public String zipCode;
+        public double distance;
         public boolean isClosed;
+        public double latitude;
+        public double longitude;
     }
 
     public static String buildYelpSearchURL(String latitude, String longitude) {
@@ -69,8 +71,28 @@ public class YelpAPIUtils {
                 JSONObject yelpListElement = yelpBusinessList.getJSONObject(i);
 
                 yelpItem.barName = yelpListElement.getString("name");
+                yelpItem.rating = yelpListElement.getInt("rating");
+                yelpItem.price = yelpListElement.getString("price");
+                yelpItem.phoneNumber = yelpListElement.getString("phone");
+                yelpItem.isClosed = yelpListElement.getBoolean("is_closed");
+                yelpItem.yelpURL = yelpListElement.getString("url");
+                yelpItem.imageURL = yelpListElement.getString("image_url");
+                yelpItem.distance = yelpListElement.getDouble("distance");
+
+                JSONObject yelpBusinessCoordinates = yelpListElement.getJSONObject("coordinates");
+                yelpItem.latitude = yelpBusinessCoordinates.getDouble("latitude");
+                yelpItem.longitude = yelpBusinessCoordinates.getDouble("longitude");
+
+                JSONObject yelpBusinessLocation = yelpListElement.getJSONObject("location");
+                yelpItem.city = yelpBusinessLocation.getString("city");
+                yelpItem.state = yelpBusinessLocation.getString("state");
+                yelpItem.country = yelpBusinessLocation.getString("country");
+                yelpItem.address = yelpBusinessLocation.getString("address1");
+                yelpItem.zipCode = yelpBusinessLocation.getString("zip_code");
+
                 yelpItemsList.add(yelpItem);
             }
+
             return yelpItemsList;
 
         } catch (JSONException e) {
