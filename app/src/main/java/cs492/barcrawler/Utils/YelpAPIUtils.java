@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class YelpAPIUtils {
     private static final String YELP_API_BASE_URL = "https://api.yelp.com/v3/businesses/search";
     private static final String YELP_API_CLIENT_ID = "H3Fk8CujrwlfrT13Fh2P6w";
+    private static final String YELP_API_LOCATION_PARAM = "location";
     private static final String YELP_API_LATITUDE_PARAM = "latitude";
     private static final String YELP_API_LONGITUDE_PARAM = "longitude";
     private static final String YELP_API_RADIUS_PARAM = "radius";
@@ -51,9 +52,20 @@ public class YelpAPIUtils {
         return Uri.parse(YELP_API_BASE_URL).buildUpon()
                 .appendQueryParameter(YELP_API_LATITUDE_PARAM, latitude)
                 .appendQueryParameter(YELP_API_LONGITUDE_PARAM, longitude)
-                .appendQueryParameter(YELP_API_CATEGORIES_PARAM, "bars,brewery,pub")
+                .appendQueryParameter(YELP_API_CATEGORIES_PARAM, "bars,pubs")
                 .appendQueryParameter(YELP_API_RADIUS_PARAM, "100")
-                .appendQueryParameter(YELP_API_OPEN_NOW_PARAM, "true")
+                .appendQueryParameter(YELP_API_OPEN_NOW_PARAM, "false")
+                .build()
+                .toString();
+    }
+
+    public static String buildYelpSearchURL(String location, String radius, String price, String open_now) {
+        return Uri.parse(YELP_API_BASE_URL).buildUpon()
+                .appendQueryParameter(YELP_API_LOCATION_PARAM, location)
+                .appendQueryParameter(YELP_API_CATEGORIES_PARAM, "bars,pubs")
+                .appendQueryParameter(YELP_API_RADIUS_PARAM, radius)
+                .appendQueryParameter(YELP_API_PRICE_PARAM, price)
+                .appendQueryParameter(YELP_API_OPEN_NOW_PARAM, open_now)
                 .build()
                 .toString();
     }

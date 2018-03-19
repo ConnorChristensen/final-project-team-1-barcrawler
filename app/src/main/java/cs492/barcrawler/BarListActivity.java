@@ -2,10 +2,12 @@ package cs492.barcrawler;
 
 
 
+import android.content.SharedPreferences;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +17,9 @@ import android.widget.TextView;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import cs492.barcrawler.Utils.YelpAPIUtils;
 
@@ -56,13 +61,46 @@ public class BarListActivity extends AppCompatActivity
     }
 
     public void loadBars() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String open_now = sharedPreferences.getString(
+                getString(R.string.pref_open_now_key),
+                getString(R.string.pref_open_now_default_value)
+        );
+
+        String location = sharedPreferences.getString(
+                getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default_value)
+        );
+
+
+        String radius = sharedPreferences.getString(
+                getString(R.string.pref_radius_key),
+                getString(R.string.pref_radius_default_value)
+        );
+
+
+        Object[] priceSelections = sharedPreferences.getStringSet(
+                getString(R.string.pref_price_key),
+                new HashSet<String>(Arrays.asList(getString(R.string.pref_price_default_value)))
+        ).toArray();
+
+        String priceRange = "";
+        for (int i = 0; i < priceSelections.length; i++) {
+            if (i < priceSelections.length - 1) {
+                priceRange = priceRange + priceSelections[i].toString() + ",";
+            } else {
+                priceRange = priceRange + priceSelections[i].toString();
+            }
+        }
 
         mLoadingIndicator.setVisibility(View.VISIBLE);
 
-        String userLatitude = "44.563694";
-        String userLongitude = "-123.262556";
+//        String userLatitude = "44.563694";
+//        String userLongitude = "-123.262556";
 
-        String yelpURL = YelpAPIUtils.buildYelpSearchURL(userLatitude, userLongitude);
+        String yelpURL = YelpAPIUtils.buildYelpSearchURL(location, radius, priceRange, open_now);
+
         Bundle loaderArgs = new Bundle();
         loaderArgs.putString(YELP_URL_KEY, yelpURL);
         LoaderManager loaderManager = getSupportLoaderManager();
