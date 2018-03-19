@@ -2,6 +2,7 @@ package cs492.barcrawler;
 
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -148,5 +149,9 @@ public class BarListActivity extends AppCompatActivity
     @Override
     public void onBarItemClick(YelpAPIUtils.YelpItem barItem) {
         // open the detailed bar view
+        Intent barsDetailed = new Intent(this, BarsDetailedActivity.class);
+        barsDetailed.putExtra(YelpAPIUtils.EXTRA_SEARCH_RESULT, barItem);
+
+        startActivity(barsDetailed);
     }
 }
