@@ -19,8 +19,6 @@ public class BarLoader extends AsyncTaskLoader<String> {
     private String mYelpURL;
     private String mYelpJSON;
 
-    private String userLatitude = "44.563694";
-    private String userLongitude = "-123.262556";
 
     public BarLoader(Context context, String yelpURL) {
         super(context);
@@ -47,7 +45,7 @@ public class BarLoader extends AsyncTaskLoader<String> {
             //This is where the network request is made
             try {
                 barJSON = NetworkUtils.doHTTPGet(
-                        YelpAPIUtils.buildYelpSearchURL(userLatitude, userLongitude),
+                        mYelpURL,
                         YelpAPIUtils.YELP_API_AUTH_HEADER_NAME,
                         YelpAPIUtils.YELP_API_AUTH_HEADER_VALUE);
 

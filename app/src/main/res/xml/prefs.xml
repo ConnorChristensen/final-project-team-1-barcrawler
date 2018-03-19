@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="@string/pref_open_now_key"
+        android:title="@string/pref_open_now_title"
+        android:dialogTitle="@string/pref_open_now_title"
+        android:entries="@array/pref_open_now_entries"
+        android:entryValues="@array/pref_open_now_values"
+        android:defaultValue="@string/pref_open_now_default_value"
+        android:summary="%s" />
+
+    <MultiSelectListPreference
+        android:key="@string/pref_price_key"
+        android:title="@string/pref_price_title"
+        android:dialogTitle="@string/pref_price_title"
+        android:entries="@array/pref_price_entries"
+        android:entryValues="@array/pref_price_values"
+        android:defaultValue="@string/pref_price_default_value"
+        android:summary="%s" />
+
+    <EditTextPreference
+        android:key="@string/pref_location_key"
+        android:title="@string/pref_location_title"
+        android:defaultValue="@string/pref_location_default_value"/>
+
+    <EditTextPreference
+        android:key="@string/pref_radius_key"
+        android:title="@string/pref_radius_title"
+        android:defaultValue="@string/pref_radius_default_value"/>
+
+</PreferenceScreen>
