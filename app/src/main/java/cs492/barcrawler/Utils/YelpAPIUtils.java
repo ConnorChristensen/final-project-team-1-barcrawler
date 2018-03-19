@@ -32,6 +32,8 @@ public class YelpAPIUtils {
     public static final String YELP_API_AUTH_HEADER_NAME = "Authorization";
     public static final String YELP_API_AUTH_HEADER_VALUE = "BEARER 5Sp7JRrDxKa4pEsh-JNADYa_Z2ZHRyvytSPcxN-Gi-0ySXfbTC4gI1Vr8FEblrFQoKDYgZENPw3U-PDS69F0aB_Pih4GACpYONmM2AthKeBWe8JLskKUnfRAooWgWnYx";
 
+    public static final String EXTRA_SEARCH_RESULT = "YelpAPIUtils.YelpItem";
+
     public static class YelpItem implements Serializable {
         public String barName;
         public String imageURL;
