@@ -150,7 +150,7 @@ public class BarListActivity extends AppCompatActivity
         //if we did not get any data back
         if (data != null) {
             ArrayList<YelpAPIUtils.YelpItem> tempList = YelpAPIUtils.parseYelpJSONResponse(data);
-            for (int i=0; i < barNum; i++) {
+            for (int i=0; i<barNum; i++) {
                 if (i < tempList.size())
                     barList.add(tempList.get(i));
             }
@@ -187,9 +187,22 @@ public class BarListActivity extends AppCompatActivity
     }
 
     public void showRouteInMap() {
-
         //Task<Location> lastLocation = mFusedLocationClient.getLastLocation();
         //String currentLocation = lastLocation.getResult().getLatitude() + "," + lastLocation.getResult().getLongitude();
+        String route = buildMapsURL();
+
+        Uri geoUri = Uri.parse(route).buildUpon()
+                .build();
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, geoUri);
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
+    }
+
+    public String buildMapsURL() {
+        String barUrl = new String();
+        StringBuilder sb = new StringBuilder();
+        int barNum = MainActivity.getBarNum();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String currentLocation = sharedPreferences.getString(
@@ -199,28 +212,15 @@ public class BarListActivity extends AppCompatActivity
         currentLocation = currentLocation.replaceAll(" ", "");
         currentLocation = currentLocation.replaceAll(",", "%2C");
 
-
-        String barUrl = new String();
-        StringBuilder sb = new StringBuilder();
-
-        int barNum = MainActivity.getBarNum();
-        System.out.println("Current location" + currentLocation);
-
-        for (int i=1; i < barNum; i++) {
+        for (int i=1; i<barNum; i++) {
             sb.append(barList.get(i).address + "%7C");
             barUrl = sb.toString();
         }
-        
+
         String route = "https://www.google.com/maps/dir/?api=1&origin=" + currentLocation + "&destination=" + barList.get(0).address + "&travelmode=driving&waypoints=" + barUrl;
         route = route.replaceAll(" ", "%20");
-        System.out.println(route);
-
-        Uri geoUri = Uri.parse(route).buildUpon()
-                .build();
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, geoUri);
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        }
+        Log.d("BAR LIST ACTIVITY", "MAPS URL: " + route);
+        return route;
     }
 
     @Override
