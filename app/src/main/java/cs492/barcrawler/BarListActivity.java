@@ -151,7 +151,8 @@ public class BarListActivity extends AppCompatActivity
         if (data != null) {
             ArrayList<YelpAPIUtils.YelpItem> tempList = YelpAPIUtils.parseYelpJSONResponse(data);
             for (int i=0; i < barNum; i++) {
-                barList.add(tempList.get(i));
+                if (i < tempList.size())
+                    barList.add(tempList.get(i));
             }
             mBarAdapter.updateBarItems(barList);
             // make the error message invisible
