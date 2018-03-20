@@ -26,6 +26,7 @@ import android.util.Log;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
+import com.yelp.clientlib.connection.YelpAPI;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class BarListActivity extends AppCompatActivity
     private String userLatitude;
     private String userLongitude;
 
-    private ArrayList<YelpAPIUtils.YelpItem> barList;
+    private ArrayList<YelpAPIUtils.YelpItem> barList = new ArrayList<YelpAPIUtils.YelpItem>();
     private FusedLocationProviderClient mFusedLocationClient;
 
     public Integer barNum;
@@ -145,9 +146,13 @@ public class BarListActivity extends AppCompatActivity
         Log.d("BAR LIST ACTIVITY", "GOT BARS FROM LOADER");
         // hide our loading indicator
         mLoadingIndicator.setVisibility(View.INVISIBLE);
+        barNum = MainActivity.getBarNum();
         //if we did not get any data back
         if (data != null) {
-            barList = YelpAPIUtils.parseYelpJSONResponse(data);
+            ArrayList<YelpAPIUtils.YelpItem> tempList = YelpAPIUtils.parseYelpJSONResponse(data);
+            for (int i=0; i < barNum; i++) {
+                barList.add(tempList.get(i));
+            }
             mBarAdapter.updateBarItems(barList);
             // make the error message invisible
             mLoadingErrorMessage.setVisibility(View.INVISIBLE);
@@ -173,14 +178,14 @@ public class BarListActivity extends AppCompatActivity
                 startActivity(settingsIntent);
                 return true;
             case R.id.action_maps:
-                showForecastLocationInMap();
+                showRouteInMap();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void showForecastLocationInMap() {
+    public void showRouteInMap() {
 
         //Task<Location> lastLocation = mFusedLocationClient.getLastLocation();
         //String currentLocation = lastLocation.getResult().getLatitude() + "," + lastLocation.getResult().getLongitude();
