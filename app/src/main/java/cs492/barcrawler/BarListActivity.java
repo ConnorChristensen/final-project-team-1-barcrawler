@@ -216,7 +216,7 @@ public class BarListActivity extends AppCompatActivity
             sb.append(barList.get(i).address + "%7C");
             barUrl = sb.toString();
         }
-
+        
         String route = "https://www.google.com/maps/dir/?api=1&origin=" + currentLocation + "&destination=" + barList.get(0).address + "&travelmode=walking&waypoints=" + barUrl;
         route = route.replaceAll(" ", "%20");
         Log.d("BAR LIST ACTIVITY", "MAPS URL: " + route);
