@@ -35,6 +35,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".BarsDetailedActivity"
+            android:parentActivityName=".BarListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BarListActivity" />
+        </activity>
     </application>
 
 </manifest>

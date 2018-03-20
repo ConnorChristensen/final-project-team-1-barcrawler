@@ -231,5 +231,9 @@ public class BarListActivity extends AppCompatActivity
     @Override
     public void onBarItemClick(YelpAPIUtils.YelpItem barItem) {
         // open the detailed bar view
+        Intent barsDetailed = new Intent(this, BarsDetailedActivity.class);
+        barsDetailed.putExtra(YelpAPIUtils.EXTRA_SEARCH_RESULT, barItem);
+
+        startActivity(barsDetailed);
     }
 }
