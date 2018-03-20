@@ -10,11 +10,16 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.net.Inet4Address;
+
+import cs492.barcrawler.Utils.YelpAPIUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     private SeekBar mSeekBar;
     private TextView mBarNumber;
     private Button mGoButton;
+    private static Integer barNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 mBarNumber.setText(Integer.toString(i));
+                barNum = i;
             }
 
             @Override
@@ -68,5 +74,9 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static int getBarNum() {
+        return barNum;
     }
 }
