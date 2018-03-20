@@ -211,7 +211,7 @@ public class BarListActivity extends AppCompatActivity
             barUrl = sb.toString();
         }
         
-        String route = "https://www.google.com/maps/dir/?api=1&origin=" + currentLocation + "&destination=" + barList.get(0).address + "&travelmode=driving&waypoints=" + barUrl;
+        String route = "https://www.google.com/maps/dir/?api=1&origin=" + currentLocation + "&destination=" + barList.get(0).address + "&travelmode=walking&waypoints=" + barUrl;
         route = route.replaceAll(" ", "%20");
         System.out.println(route);
 
