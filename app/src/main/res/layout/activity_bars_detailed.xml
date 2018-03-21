@@ -20,28 +20,44 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:layout_marginTop="5dp"/>
 
-        <TextView
-            android:id="@+id/tv_bar_price"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="22sp" />
+            android:orientation="vertical"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/tv_bar_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="22sp" />
+            <TextView
+                android:id="@+id/tv_bar_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:padding="8dp"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/tv_bar_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="22sp" />
+            <TextView
+                android:id="@+id/tv_bar_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:padding="8dp"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tv_bar_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:padding="8dp"
+                android:textSize="22sp" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
