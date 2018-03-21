@@ -22,9 +22,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.yelp.clientlib.connection.YelpAPI;
 
@@ -150,7 +152,7 @@ public class BarListActivity extends AppCompatActivity
         //if we did not get any data back
         if (data != null) {
             ArrayList<YelpAPIUtils.YelpItem> tempList = YelpAPIUtils.parseYelpJSONResponse(data);
-            for (int i=0; i<barNum; i++) {
+            for (int i = 0; i < barNum; i++) {
                 if (i < tempList.size())
                     barList.add(tempList.get(i));
             }
@@ -179,7 +181,14 @@ public class BarListActivity extends AppCompatActivity
                 startActivity(settingsIntent);
                 return true;
             case R.id.action_maps:
-                showRouteInMap();
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        Toast.makeText(this, "Permission is needed to use your current location", Toast.LENGTH_SHORT);
+                    }
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 9);
+                } else {
+                    showRouteInMap();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -187,8 +196,6 @@ public class BarListActivity extends AppCompatActivity
     }
 
     public void showRouteInMap() {
-        //Task<Location> lastLocation = mFusedLocationClient.getLastLocation();
-        //String currentLocation = lastLocation.getResult().getLatitude() + "," + lastLocation.getResult().getLongitude();
         String route = buildMapsURL();
 
         Uri geoUri = Uri.parse(route).buildUpon()
@@ -200,24 +207,41 @@ public class BarListActivity extends AppCompatActivity
     }
 
     public String buildMapsURL() {
+        final String[] currentLocation = {new String()};
+        final Task<Location> lastLocation = mFusedLocationClient.getLastLocation();
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            double curLat = lastLocation.getResult().getLatitude();
+                            double curLong = lastLocation.getResult().getLatitude();
+                            currentLocation[0] = Double.toString(curLat) + "," + Double.toString(curLong);
+                        } else {
+
+                        }
+                    }
+                });
+        currentLocation[0] = currentLocation[0].replaceAll(",", "%2C");
+
         String barUrl = new String();
         StringBuilder sb = new StringBuilder();
         int barNum = MainActivity.getBarNum();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String currentLocation = sharedPreferences.getString(
+        String prefLocation = sharedPreferences.getString(
                 getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default_value)
         );
-        currentLocation = currentLocation.replaceAll(" ", "");
-        currentLocation = currentLocation.replaceAll(",", "%2C");
+        prefLocation = prefLocation.replaceAll(" ", "");
+        prefLocation = prefLocation.replaceAll(",", "%2C");
 
         for (int i=1; i<barNum; i++) {
             sb.append(barList.get(i).address + "%7C");
             barUrl = sb.toString();
         }
-
-        String route = "https://www.google.com/maps/dir/?api=1&origin=" + currentLocation + "&destination=" + barList.get(0).address + "&travelmode=walking&waypoints=" + barUrl;
+        
+        String route = "https://www.google.com/maps/dir/?api=1&origin=" + currentLocation[0] + "&destination=" + barList.get(0).address + "&travelmode=walking&waypoints=" + barUrl;
         route = route.replaceAll(" ", "%20");
         Log.d("BAR LIST ACTIVITY", "MAPS URL: " + route);
         return route;
@@ -235,5 +259,25 @@ public class BarListActivity extends AppCompatActivity
         barsDetailed.putExtra(YelpAPIUtils.EXTRA_SEARCH_RESULT, barItem);
 
         startActivity(barsDetailed);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 9: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showRouteInMap();
+                } else {
+                    return;
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }
